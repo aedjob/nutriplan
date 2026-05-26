@@ -1,11 +1,21 @@
-import WeeklyCalendar from "../components/WeeklyCalendar";
+import { useState } from "react";
+import DayPlan from "../components/DayPlan";
+import ScheduleBar from "../components/ScheduleBar";
 
 function Plan() {
+    const today = new Date()
+    const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
+    const todayName = days[today.getDay()]
+    const [day, setDay] = useState(todayName)
+
     return(
-        <div className="min-h-screen bg-green-50 p-8 pt-14">
-            <h1 className="text-4xl font-bold text-green-700 mb-8">This week's plan!</h1>
-            <WeeklyCalendar />
-        </div>
+        <>
+            <ScheduleBar onDaySelect={setDay}/>
+            <div className="w-full max-w-[750px] mx-auto py-1 px-4">
+                <h1 className="text-lg text-center font-bold mt-4">- MEALS -</h1>
+                <DayPlan day={day}/>
+            </div>
+        </>
     )
 }
 

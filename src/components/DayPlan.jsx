@@ -1,8 +1,7 @@
 import { useEffect, useState } from "react"
 import { supabase } from "../supabase"
 
-function WeeklyCalendar() {
-    const days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
+function DayPlan({day}) {
     const meals = ["Breakfast", "Lunch", "Snack", "Dinner"]
 
     const [recipes, setRecipes] = useState([])
@@ -17,7 +16,7 @@ function WeeklyCalendar() {
         }
         fetchData()},[])
 
-    function getRecipe(day,meal) {
+    function getRecipe(meal) {
         const planDay = mealPlan.find(p => p.day === day)
         if(!planDay) return null
         const recipeId = planDay[meal.toLowerCase()]
@@ -25,23 +24,23 @@ function WeeklyCalendar() {
     }
 
     return(
-        <div className="grid grid-cols-7 gap-4 mt-8">
-            {days.map(day => (
-                <div key={day} className="bg-white rounded-2xl shadow-sm border border-gray-100 p-4">
-                    <h2 className="text-sm font-bold text-green-700 uppercase tracking-wide mb-3">{day}</h2>
-                    {meals.map(meal => {
-                        const recipe = getRecipe(day, meal)
+        <div className="flex flex-col gap-4 mt-2">
+                {meals.map(meal => {
+                        const recipe = getRecipe(meal)
                         return(
-                            <div key={meal} className="mb-2 p-2 bg-green-50 rounded-lg">
-                                <p className="text-xs font-medium text-gray-500">{meal}</p>
-                                <p className="text-xs text-gray-800 mt-1">{recipe ? recipe.name : ''}</p>
+                            <div key={meal} className="flex items-center gap-4 bg-gray-50 rounded-xl overflow-hidden shadow-sm">
+                                <div className="w-42 h-28 bg-gray-200 flex-shrink-0">
+                                {recipe?.image_url && <img src={recipe.image_url} className="w-full h-full object-cover" />}
+                                </div>
+                                <div>
+                                    <p className="text-xs font-medium text-gray-500">{meal.toUpperCase()}</p>
+                                    <p className="text-m font-bold text-gray-800 mt-1">{recipe ? recipe.name : ''}</p>
+                                </div>
                             </div>
                         )                    
                     })}
-                </div>
-            ))}
         </div>
     )
 }
 
-export default WeeklyCalendar
+export default DayPlan
