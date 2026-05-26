@@ -1,15 +1,17 @@
-import WeeklyCalendar from "./WeeklyCalendar"
-import RecipeList from "./RecipeList"
+import { Routes, Route } from "react-router-dom"
+import Home from './pages/Home'
+import Plan from './pages/Plan'
+import Recipes from './pages/Recipes'
+import RecipeDetail from './pages/RecipeDetail'
 
 function App() {
   return (
-    <div className="min-h-screen bg-green-50 p-8">
-      <h1 className="text-4xl font-bold text-green-700 mb-8">Nutriplan</h1>
-      <div className="flex gap-4 flex-wrap">
-        <RecipeList />
-      </div>
-      <div><WeeklyCalendar /></div>
-    </div>
+    <Routes>
+      <Route path="/" element={<Home />} />
+      <Route path="/plan" element={<Plan />} />
+      <Route path="/recipes" element={<Recipes />} />
+      <Route path="/recipes/:id" element={<RecipeDetail />} />      
+    </Routes>
   )
 }
 
