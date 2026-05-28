@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react"
 import { supabase } from "../supabase"
+import { Link } from "react-router-dom"
 
 function DayPlan({day}) {
     const meals = ["Breakfast", "Lunch", "Snack", "Dinner"]
@@ -28,15 +29,17 @@ function DayPlan({day}) {
                 {meals.map(meal => {
                         const recipe = getRecipe(meal)
                         return(
-                            <div key={meal} className="flex items-center gap-4 bg-gray-50 rounded-xl overflow-hidden shadow-sm">
-                                <div className="w-42 h-28 bg-gray-200 flex-shrink-0">
-                                {recipe?.image_url && <img src={recipe.image_url} className="w-full h-full object-cover" />}
-                                </div>
-                                <div>
-                                    <p className="text-xs font-medium text-gray-500">{meal.toUpperCase()}</p>
-                                    <p className="text-m font-bold text-gray-800 mt-1">{recipe ? recipe.name : ''}</p>
-                                </div>
-                            </div>
+                            <Link key={meal} to={`/recipes/${recipe?.id}`}>
+                                <div className="flex items-center gap-4 bg-gray-50 rounded-xl overflow-hidden shadow-sm">
+                                    <div className="w-42 h-28 bg-gray-200 flex-shrink-0">
+                                    {recipe?.image_url && <img src={recipe.image_url} className="w-full h-full object-cover" />}
+                                    </div>
+                                    <div>
+                                        <p className="text-xs font-medium text-gray-500">{meal.toUpperCase()}</p>
+                                        <p className="text-m font-bold text-gray-800 mt-1">{recipe ? recipe.name : ''}</p>
+                                    </div>
+                                </div>                            
+                            </Link>
                         )                    
                     })}
         </div>
